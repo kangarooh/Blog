@@ -1,0 +1,245 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>首页_Kangaroo个人博客</title>
+<!--<meta name="keywords" content="个人博客,杨青个人博客,个人博客模板,杨青" />-->
+<!--<meta name="description" content="杨青个人博客，是一个站在web前端设计之路的女程序员个人网站，提供个人博客模板免费资源下载的个人原创网站。" />-->
+<!--<meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+<link href="../static/css/base.css" rel="stylesheet">
+<link href="../static/css/index.css" rel="stylesheet">
+<link href="../static/css/m.css" rel="stylesheet">
+<script src="../static/js/jquery.min.js" ></script>
+<script src="../static/js/hc-sticky.js"></script>
+<script src="../static/js/comm.js"></script>
+<!--[if lt IE 9]>
+<script src="../static/js/modernizr.js"></script>
+<![endif]-->
+</head>
+<body>
+<header id="header">
+  <div class="navbar">
+    <div class="topbox">
+      <p class="welcome">您好，欢迎您访问戴书豪个人博客，本博客记载了本人学习Python的一些学习经历，以及记录个人的博客！</p>
+      <div class="searchbox">
+        <!--<div id="search_bar" class="search_bar">-->
+          <!--<form  id="searchform" action="[!&#45;&#45;news.url&#45;&#45;]e/search/index.php" method="post" name="searchform">-->
+            <!--<input class="input" placeholder="想搜点什么呢.." type="text" name="keyboard" id="keyboard">-->
+            <!--<input type="hidden" name="show" value="title" />-->
+            <!--<input type="hidden" name="tempid" value="1" />-->
+            <!--<input type="hidden" name="tbname" value="news">-->
+            <!--<input type="hidden" name="Submit" value="搜索" />-->
+            <!--<p class="search_ico"> <span></span></p>-->
+          <!--</form>-->
+        <!--</div>-->
+      </div>
+    </div>
+  </div>
+  <div class="header-navigation">
+    <nav>
+      <div class="logo"><a href="#">戴书豪个人博客</a></div>
+      <h2 id="mnavh"><span class="navicon"></span></h2>
+      <ul id="starlist">
+          <li><a href="/">博客首页</a></li>
+          <li class="menu"><a href="/fengmian">学习笔记</a>
+              {% for category in params.categories %}
+              <ul class="sub">
+                  <li><a href="/fengmian">{{category.cate_name}}</a></li>
+              </ul>
+              {% endfor %}
+          </li>
+          <li><a href="/about">我的简介</a></li>
+          <li><a href="/release">发表博客</a> </li>
+          <li><a href="/time">文章列表</a></li>
+          {% if not params.user %}
+          <a href="/login" id="login" target="_blank">登录</a>
+          <a href="/register" id="register" target="_blank">注册</a>
+          {% else %}
+          <a id="login">欢迎:{{params.user.username}}</a>
+          <a href="/logout" id="register">退出</a>
+    {% endif %}
+      </ul>
+
+    </nav>
+
+  </div>
+
+</header>
+
+
+<div class="wrapper">
+  {% block main %}
+    <main>
+    <!--banner begin-->
+    <div class="banner">
+      <div id="banner" class="fader">
+        {% for topic in params.top_topic %}
+        <li class="slide" ><a href="/info?topic_id={{topic.id}}" title="{{topic.title}}" target="_blank"><img src="../static/images/{{topic.images}}"><span class="imginfo">{{topic.title}}</span></a></li>
+        <!--<li class="slide" ><a href="/news/life/2018-04-27/816.html" title="个人博客，属于我的小世界！" target="_blank"><img src="../static/images/2.jpg"><span class="imginfo">个人博客，属于我的小世界！</span></a></li>-->
+        {% endfor %}
+        <div class="fader_controls">
+          <div class="page prev" data-target="prev">&lsaquo;</div>
+          <div class="page next" data-target="next">&rsaquo;</div>
+          <ul class="pager_list">
+          </ul>
+        </div>
+      </div>
+    </div>
+    <!--banner end-->
+    <div class="bloglist">
+      <ul>
+      {% for topic in params.topics %}
+        <li>
+          {% if topic.images %}
+          <i class="blogpic"><a href="/info?topic_id={{topic.id}}"><img src="../static/images/{{topic.images}}" alt=""> </a></i>
+
+          {% endif %}
+            <dl>
+              <dt><a href="/info?topic_id={{topic.id}}" target="_blank">{{topic.title}}</a></dt>
+              <dd><span class="bloginfo">{{params.dic[topic.id]}}</span>
+                <p class="timeinfo"><span class="lanmu"><a href="/fengmian" target="_blank">{{topic.category.cate_name}}</a></span><span class="date">{{topic.pub_date}}</span></p>
+                <a class="read" href="/info?topic_id={{topic.id}}">阅读更多</a> </dd>
+            </dl>
+          </li>
+        {% endfor %}
+
+      </ul>
+    </div>
+    <!--bloglist end-->
+  </main>
+  {% endblock %}
+  {% block sidebar %}
+  <aside class="sidebar">
+    {% block fenlei %}
+    <div class="fenlei">
+      <ul class="flnav">
+        <li class="flselect"><a href="#" title="最新文章" class="pall"></a></li>
+        <!--<li><a href="#" title="站长推荐" class="pgood"></a></li>-->
+        <li><a href="#" title="点击排行" class="pbro"></a></li>
+        <li><a href="#" title="头条关注" class="pfav"></a></li>
+      </ul>
+    </div>
+    {% endblock %}
+    {% block newstw %}
+    <div class="newstw">
+      <ul class="sidenews">
+        <h2>最新文章</h2>
+
+        {% for topic in params.topic_date %}
+          {% if topic.images %}
+        <li>
+          <i><img src="../static/images/{{topic.images}}"></i>
+          <p><a href="/info?topic_id={{topic.id}}">{{topic.title}}</a></p>
+          <span>{{topic.pub_date}}</span> </li>
+          {% endif %}
+        {% endfor %}
+
+      </ul>
+      <ul class="sidenews">
+        <h2>点击排行</h2>
+
+        {% for topic in params.topic_num %}
+          {% if topic.images %}
+        <li>
+          <i><img src="../static/images/{{topic.images}}"></i>
+          <p><a href="/info?topic_id={{topic.id}}">{{topic.title}}</a></p>
+          <span>{{topic.pub_date}}</span> </li>
+          {% endif %}
+        {% endfor %}
+      </ul>
+      <ul class="sidenews">
+        <h2>头条关注</h2>
+        {% for topic in params.topics %}
+        {% if topic.category_id==2 %}
+            {% if topic.images %}
+          <li>
+            <i><img src="../static/images/{{topic.image}}"></i>
+            <p><a href="/info?id={{topic.id}}}">{{topic.title}}</a></p>
+            <span>{{topic.pub_date}}</span> </li>
+            {% endif %}
+
+        {% endif %}
+        {% endfor %}
+      </ul>
+    </div>
+    {% endblock %}
+    <div class="ad"> <img src="../static/images/banner02.jpg"> </div>
+
+    {% block about %}
+    <div class="about">
+      <h2 class="hometitle">关于本站</h2>
+      <ul>
+        <div class="avatar"> <img src="../static/images/tx.png" alt=""> </div>
+        <p class="abname">Kangaroo | 戴书豪</p>
+        <p class="abtext"> 一个90后的Python菜鸟！入行不久，努力学习Python技术，在学习中积累经验，制作个人博客，记录学习经历。</p>
+        <li><a class="xlwb" href="#" target="_blank"></a></li>
+        <li><a class="txqq" href="" target="_blank"></a></li>
+        <li><a class="rss" href="" target="_blank"></a></li>
+        <li class="wxpic"><a class="wx" href=""></a><img src="../static/images/grwx.png"></li>
+      </ul>
+    </div>
+    {% endblock %}
+    {% block tjlm %}
+    <div class="tjlm">
+      <h2 class="hometitle">推荐栏目</h2>
+      <ul>
+        <li><a href="/about">关于我</a></li>
+        <!--<li><a href="share.html">模板分享</a></li>-->
+        <li><a href="/time">文章列表</a></li>
+        <li><a href="/fengmian">个人项目</a></li>
+        <li><a href="/fengmian">Python基础</a></li>
+        <!--<li><a href="#">美文欣赏</a></li>-->
+      </ul>
+    </div>
+    {% endblock %}
+    {% block tpjx %}
+    <div class="tpjx">
+      <h2 class="hometitle">图片精选</h2>
+      <ul>
+        {% for topic in params.Topic_tp %}
+        {% if topic.images %}
+        <li><a href="/info?id={{topic.id}}"><i><img src="../static/images/{{topic.images}}"></i><span>{{topic.title}}</span></a></li>
+        {% endif %}
+        {% endfor %}
+      </ul>
+    </div>
+    {% endblock %}
+    {% block links %}
+    <div class="links">
+      <h2 class="hometitle">友情链接</h2>
+      <!--<ul>-->
+        <!--<li><a href="http://www.yangqq.com">杨青个人博客</a></li>-->
+      <!--</ul>-->
+    </div>
+    <div class="ad"> <img src="../static/images/zd02.jpg"> </div>
+    {% endblock %}
+  </aside>
+  <!--sidebar end-->
+  {% endblock %}
+</div>
+<!--wrapper end-->
+{% block footer %}
+<footer>
+  <div class="footer">
+    <div class="wxbox">
+      <ul>
+        <li><img src="../static/images/grwx.png"><span>我的微信</span></li>
+        <li><img src="../static/images/grqq.png"><span>我的QQ</span></li>
+      </ul>
+    </div>
+    <div class="bzjj">
+      <h2>本站简介</h2>
+      <p>戴书豪个人博客，本博客记载了本人学习Python的一些学习经历，以及记录个人的博客！(如有内容侵权，请联系作者删除)</p>
+    </div>
+    <!--<div class="other">-->
+      <!--<h2>网站版权</h2>-->
+      <!--<p>未经授权禁止转载、摘编、复制或建立镜像，如有违反，追究法律责任。举报邮箱：476847113@qq.com</p>-->
+      <!--<p>&nbsp;</p>-->
+      <!--<p>备案号：蜀ICP备11002373号-1</p>-->
+    <!--</div>-->
+  </div>
+</footer>
+{% endblock %}
+<a href="#" class="cd-top">Top</a>
+</body>
+</html>

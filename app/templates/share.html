@@ -1,0 +1,28 @@
+{% extends 'index.html' %}
+
+{% block main %}
+
+  <main>
+   <h2 class="place">您现在的位置是：网站首页&gt; <a href="/share">文章列表</a></h2>
+    <div class="sharelist">
+
+      <ul>
+        {% for topic in params.topics %}
+        {% for mfile in params.L %}
+        <li>
+          <div class="tpic"><img src="../static/images/{{topic.images}}"></div>
+          <b>{{topic.title}}</b><span>{{mfile}}</span><a href="/info?topic_id={{topic.id}}" class="readmore">阅读原文</a></li>
+        <li>
+        {% endfor %}
+        {% endfor %}
+      </ul>
+
+    </div>
+    <!--bloglist end-->
+    <div class="pagelist"><a title="Total record">&nbsp;<b>163</b> </a>&nbsp;&nbsp;&nbsp;<b>1</b>&nbsp;<a href="/jstt/index_2.html">2</a>&nbsp;<a href="/jstt/index_3.html">3</a>&nbsp;<a href="/jstt/index_4.html">4</a>&nbsp;<a href="/jstt/index_5.html">5</a>&nbsp;<a href="/jstt/index_6.html">6</a>&nbsp;<a href="/jstt/index_2.html">下一页</a>&nbsp;<a href="/jstt/index_14.html">尾页</a></div>
+  </main>
+{% endblock %}
+
+{% block links %}
+{% endblock %}
+

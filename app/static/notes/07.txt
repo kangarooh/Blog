@@ -1,0 +1,161 @@
+MySQL概述
+ 1.什么是数据库
+   存储数据的仓库
+ 2.都有哪些公司在用数据库
+   金融机构  游戏网站  购物网站 论坛网站......
+ 3.提供数据库的软件
+   1、软件分类
+     MySQL、Oracle、SQL_Server、DB2、MongoDB、MariaDB
+
+   2、生产环境中，如何选择使用哪个数据库软件
+     1、是否开源
+      1、开源软件：MySql、Mariadb、MongoDB
+      2、商业软件：Oracle、DB2、SQL_Server
+     2、是否跨平台
+      1、不跨平台：SQL_Server
+      2、不跨平台：......
+     3、公司的类型
+        商业软件：政府部门、金融机构
+        开源软件：游戏网站、购物网站、论坛网站 ...
+
+ 4、MySQL特点
+   1、关系型数据库
+
+      1、关系型数据库的特点
+        1、数据是以行和列的形式存储
+        2、表中每一行叫一条记录
+        3、表中的每一列叫一个字段
+        4、表和表之间的逻辑关联叫关系
+
+
+      2、示例
+      1、关系型数据库存储
+        表1、学生信息表
+          姓名  年龄  班级
+          星矢   25   三班
+          水冰月 25   六班
+        表2、班级信息表
+          班级  班主任
+          三班  大空翼
+          六班  松人
+      2、非关系型数据库存储
+        {"姓名":"星矢","年龄":25,"班级":"三班","班主任":"大空翼"}
+        {"姓名":"水冰月","年龄":25,"班级":"六班","班主任":"松人"}
+
+    2、跨平台
+      可以在Unix、Linux、Windows上运行数据库服务
+
+    3、支持多种编程语言
+      Python、Java、php ...
+
+  5、数据库软件、数据库、数据仓库
+    1、数据库软件
+      是一种软件,可以看得见,可操作,来实现数据库逻辑功能
+    2、数据库
+      是一种逻辑概念,用来存放数据的仓库,通过数据库软件来实现,侧重存储
+    3、数据仓库
+      数据仓库主要用于数据挖掘和数据分析
+      网购：
+        数据库： user --> 用户名和密码
+        数据仓库：哪个时间段用户登录量最多,哪个用户一年购物最多...
+
+2.MySQL安装
+  1.Ubuntu安装MySQL服务
+    安装服务端
+      sudo apt—get install mysql-server
+    安装客户端
+      sudo apt—get install mysql-client
+    Ubuntu安装软件
+      sudo appt-get update
+        访问源列表中的每个网址，读取软件列表，保存到本地
+      sudo apr-get upgrade
+        把本地已安装软件与刚下载的软件列表进行对比，如果发现已安装软件版本过低，则更新
+      sudo apt-get  -f install
+        修复依赖关系
+
+  Windows安装MySQL
+    下载MySQL安装包（安装包）
+      mysql-install***5.7.***.msi
+    安装按教程去安装
+
+  启动和连接MySQL服务
+    服务端启动
+      查看MySQL状态
+        sudo /etc/init.d/mysql/ status
+        sudo /etc/init.d/mysql start | stop | restart
+    客户端连接
+      命令格式
+        mysql -h主机地址 -u用户名 -p密码
+        mysql -hlocalhost -uroot -p123456
+
+SQ基本命令
+  使用规则
+    每条命令必须以 ； 结尾
+    SQL命令不区分字母大小写
+    使用\c 来终止当前命令的执行
+
+库的管理
+库的基本操作
+  查看已有的库
+    show databases;
+  创建库(指定字符集)
+   create databases 库名[character set utf8];
+  查看创建库的语句(字符集)
+    show create database 库名;
+  查看当前所在库
+    select database();
+  切换库
+    use 库名;
+  查看库中已有表
+    show tables;
+  删除库
+    drop database 库名;
+
+库名的命名规则
+  数字、字母、下划线，但不能使用纯数字
+  库名区分字母大小写
+  不能使用特殊字符和mysql关键字
+
+表的管理
+  表的基本操作
+    创建表(指定字符集)
+      create table 表名(字段名1 数据类型,字段名2 数据类型,字段名3 数据类型)character set utf8;
+    查看创建表的语句(字符集)
+      show create table 表名;
+    查看表结构
+      desc 表名;
+    删除表
+      drop table 表名;
+    注意
+      所有的数据都是以文件的形式存放在数据库目录/var/lib/mysql
+      数据库目录：/var/lib/mysql
+
+    表记录管理
+      插入（insert）
+        insert into 表名 values(值1),(值2),...,
+        insert into 表名(字段1,...)values(值1),...;
+      查询(select)
+        select * from 表名 [where 条件];
+        select 字段1，字段2 from 表名[where 条件]；
+
+如何更改默认字符集
+方法
+  通过更改MySQL配置文件实现
+步骤
+  1、获取root权限
+    sudo -i
+  2、备份配置文件
+    cd /etc/mysql/mysql.conf.d/
+    cp  mysqld.cnf  mysqld.cnf.bak
+  3、更改mysqld.cnf配置
+    subl mysqld.cnf
+    [mysqld]
+    character_set_server=utf8
+  4、重启mysql服务
+    sudo /etc/init.d/mysql restart
+
+客户端把数据存储到数据库服务器上的过程
+1、先连接到数据库服务器
+2、选择库
+3、创建或者修改表
+4、断开与数据库的连接  exit; | quit; | \q;

@@ -1,0 +1,54 @@
+MySQL的数据类型
+
+1、数值类型
+    整型
+      int (4个字节)
+      tinyint (1个字节)
+        默认有符号：signed
+        无符号: tinyint unsigned
+      bigint (8个字节)
+         char(11) 11个字节
+    浮点型
+      float(m,n) -->最多显示7个有效位
+      decimal(m,n)
+字符类型
+    定长 char(15) : 浪费存储空间,性能高
+    边长 varchar(20) : 节省存储空间,性能低
+    text / longtext / blob / longblob
+
+    字符类型宽度和数值类型宽度的区别
+      数值类型宽度为显示宽度,只用于select查询显示,和占用存储无关,可用zerofill查看效果
+      字符类型的宽度超过之后则无法存储
+
+  注意
+    1、浮点型 插入整数时会自动补全小数位位数
+    2、小数位多于指定的位数,会对下一位进行四舍五入
+
+3、枚举类型
+  1、单选(enum) ：字段名 enum(值1,值2,...)
+  2、多选(set)  ：字段名 set(值1,值2,...)
+      ## 插入记录时: "F,study,Python"
+      create table t5(
+      id int(3) zerofill,
+      name varchar(15),
+      sex enum("M","F","Secret"),
+      likes set("F","M","study","Python")
+      );
+      insert into t5(likes) values("F,study,Python");
+
+4、日期时间类型
+    1、date ："YYYY-MM-DD"
+    2、time ："HH:MM:SS"
+    3、datetime ："YYYY-MM-DD HH:MM:SS"
+    4、timestamp ："YYYY-MM-DD HH:MM:SS"
+    5、注意
+      1、datetime ：不给值默认返回NULL值
+      2、timestamp ：不给值默认返回系统当前时间
+      create table t7(
+      id int,
+      name varchar(15),
+      birthday date,
+      money int,
+      shijian datetime
+      );
+      insert into t7 values(2,"王",date(now()),10000,now());

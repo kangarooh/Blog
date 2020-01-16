@@ -1,0 +1,66 @@
+{% extends 'index.html' %}
+
+{% block main %}
+
+ <main>
+    <h2 class="place">您现在的位置是：网站首页&gt; <a href="/">内容页</a></h2>
+    <div class="infosbox">
+      <div class="newsview">
+        <h3 class="news_title">{{params.topic.title}}</h3>
+        <div class="bloginfo">
+          <ul>
+            <li class="author"> </li>
+            <li class="lmname">{{params.topic.category.cate_name}}</li>
+            <li class="timer">{{params.topic.pub_date}}</li>
+            <li class="view">{{params.topic.read_num}}人已阅读</li>
+          </ul>
+        </div>
+        <!--<div class="tags"><a href="/e/tags/?tagname=%B8%F6%C8%CB%B2%A9%BF%CD&amp;tempid=13" target="_blank">个人博客</a> &nbsp; <a href="/e/tags/?tagname=%B5%DB%B9%FAcms&amp;tempid=13" target="_blank">帝国cms</a></div>-->
+        <!--<div class="news_about"><strong>简介</strong>有人会以为我是"高冷型"，no，错了，我是"好好型"的，从合作开始，我们之间的关系也不仅仅只有交易，在我看来，我们会是朋友。有些微信加了很久的网友，哪怕一句话也没说过，只要我们没有互相拉黑，有时间的见证，我们亦是朋友。</div>-->
+        <div class="news_con">
+          <br>
+          <textarea class="textbox" v-model="item.content"cols="80" rows="70" readonly="readonly">{{params.file}}</textarea>
+          <!--<p>{{params.file}}</p>-->
+
+      </div>
+      <!--<div class="share">-->
+        <!--<p class="diggit"><a href='#'> 很赞哦！ </a>(<b id="diggnum"><script type="text/javascript" src="{{url_for('static', filename = 'js/zan.js')}}"></script>19</b>)</p>-->
+        <!--&lt;!&ndash;<p class="diggit" onclick="dianzan()"><script type="text/javascript" src="{{url_for('static', filename = 'js/zan.js')}}"></script>很赞哦！(17)</p>&ndash;&gt;-->
+      <!--</div>-->
+      <div class="nextinfo">
+        <p>上一篇：<a href="/info?topic_id={{params.prevTopic.id}}">{{params.prevTopic.title}}</a></p>
+        <p>下一篇：<a href="/info?topic_id={{params.nextTopic.id}}">{{params.nextTopic.title}}</a></p>
+      </div>
+      <div class="otherlink">
+        <h2>相关文章</h2>
+        <ul>
+          {% for topic in params.topics %}
+            {% if topic.id==params.topic.id %}
+            <a></a>
+            {% else %}
+            <li><a href="/info?topic_id={{topic.id}}" title="{{topic.title}}">{{topic.title}}</a></li>
+            {% endif %}
+          {% endfor %}
+          <!--<li><a href="/download/div/2018-04-18/814.html" title="html5个人博客模板主题《清雅》">html5个人博客模板主题《清雅》</a></li>-->
+          <!--<li><a href="/download/div/2018-03-18/807.html" title="html5个人博客模板主题《绅士》">html5个人博客模板主题《绅士》</a></li>-->
+          <!--<li><a href="/download/div/2018-02-22/798.html" title="html5时尚个人博客模板-技术门户型">html5时尚个人博客模板-技术门户型</a></li>-->
+          <!--<li><a href="/download/div/2017-09-08/789.html" title="html5个人博客模板主题《心蓝时间轴》">html5个人博客模板主题《心蓝时间轴》</a></li>-->
+          <!--<li><a href="/download/div/2017-07-16/785.html" title="古典个人博客模板《江南墨卷》">古典个人博客模板《江南墨卷》</a></li>-->
+          <!--<li><a href="/download/div/2017-07-13/783.html" title="古典风格-个人博客模板">古典风格-个人博客模板</a></li>-->
+          <!--<li><a href="/download/div/2015-06-28/748.html" title="个人博客《草根寻梦》—手机版模板">个人博客《草根寻梦》—手机版模板</a></li>-->
+          <!--<li><a href="/download/div/2015-04-10/746.html" title="【活动作品】柠檬绿兔小白个人博客模板">【活动作品】柠檬绿兔小白个人博客模板</a></li>-->
+          <!--<li><a href="/jstt/bj/2015-01-09/740.html" title="【匆匆那些年】总结个人博客经历的这四年…">【匆匆那些年】总结个人博客经历的这四年…</a></li>-->
+        </ul>
+      </div>
+      <!--<div class="news_pl">-->
+        <!--<h2>文章评论</h2>-->
+        <div class="gbko"> </div>
+      </div>
+    </div>
+  </main>
+{% endblock %}
+
+{% block links %}
+{% endblock %}
+
+

@@ -1,0 +1,42 @@
+{% extends 'index.html' %}
+
+{% block main %}
+
+  <main>
+    <h2 class="place">您现在的位置是：网站首页&gt; <a href="#">学习笔记</a></h2>
+    {% for category in params.categories %}
+
+    <div class="fengm" name="{{category.cate_name}}">
+      <h3 ><span><a href="/time" target="_blank">更多+</a></span>{{category.cate_name}}</h3>
+
+      <div class="fpicbox">
+        {% for L in params.t %}
+        <ul>
+          {% for topic in L %}
+            {% if topic.category_id==category.id %}
+              <li class="fpic"><a href="/info?topic_id={{topic.id}}" target="_blank"><img src="../static/images/{{topic.images}}"><i>{{topic.title}}</i></a></li>
+          <!--<li class="fpic"><a href="/" target="_blank"><img src="../static/images/4.jpg"><i>安静地做一个爱设计的女子</i></a></li>-->
+          <!--<li class="fpic"><a href="/" target="_blank"><img src="../static/images/3.jpg"><i>作为一个设计师,如果遭到质疑你是否能恪守自己的原则</i></a></li>-->
+            {% endif %}
+          {% endfor %}
+        </ul>
+        {% endfor %}
+      </div>
+      <ul class="fmnews">
+        {% for topic in params.topics %}
+          {% if topic.category_id==category.id %}
+            <li><span>{{topic.pub_date}}</span> <a href="/info?topic_id={{topic.id}}">{{topic.title}}</a></li>
+          {% endif %}
+        {% endfor %}
+      </ul>
+    </div>
+
+    {% endfor %}
+
+  </main>
+{% endblock %}
+
+{% block links %}
+{% endblock %}
+
+
